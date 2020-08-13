@@ -34,6 +34,30 @@ public class TimeTest {
         assertThat("12:30:46\n", is(outContent.toString()));
     }
 
+    @Test
+    public void shouldIncrementMinutesByOneWhenSecondsIsEqualTo60() {
+        Time time = new Time(2, 8, 60);
+        time.tick();
+        time.print();
+        assertThat("2:9:0\n", is(outContent.toString()));
+    }
+
+    @Test
+    public void shouldIncrementHoursByOneWhenMinutesAndSecondsAreEqualTo60() {
+        Time time = new Time(2, 60, 60);
+        time.tick();
+        time.print();
+        assertThat("3:0:0\n", is(outContent.toString()));
+    }
+
+    @Test
+    public void shouldResetHoursMinutesAndSecondsTo0WhenHoursIsEqualTo12AndMinutesAndSecondsAreEqualTo60() {
+        Time time = new Time(12, 60, 60);
+        time.tick();
+        time.print();
+        assertThat("0:0:0\n", is(outContent.toString()));
+    }
+
     @After
     public void restoreStreams() {
         System.setOut(originalOut);
